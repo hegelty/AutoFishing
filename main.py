@@ -28,16 +28,13 @@ class Worker(QThread):
         time.sleep(3)
         print("start")
 
-        target = cv2.imread("target.png", cv2.IMREAD_GRAYSCALE)
+        target = cv2.imread("D:\\programming\\AutoFishing\\target.png", cv2.IMREAD_GRAYSCALE)
 
         tcnt = 0
         while self.working == 0:
             tcnt += 1
             print(tcnt)
             img = capture()
-
-            if img is None:
-                break
 
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)  # 캡처한 이미지를 그레이스케일로
 
@@ -46,7 +43,7 @@ class Worker(QThread):
 
             if len(position[0]) != 0:
                 pyautogui.click(x=area_x1, y=area_y1, button="right")
-                time.sleep(0.3)
+                time.sleep(0.5)
                 pyautogui.click(x=area_x1, y=area_y1, button="right")
 
                 self.up.emit()
@@ -106,6 +103,7 @@ class Main(QWidget):
         self.progressText.append("[" + timestr + "] " + string)
 
     def worker_start(self):
+        self.print_progress_text("시작")
         self.worker.start()
         self.worker.working = True
 
@@ -137,7 +135,7 @@ class Main(QWidget):
         grid.addWidget(startButton, 0, 4)
         grid.addWidget(stopButton, 1, 4)
         grid.addWidget(self.fishingCounter, 2, 4)
-        grid.addWidget(QLabel("Auto Fishing\nMade by Hegel\nV1.0\n\n©2020 Hegel"), 4, 4)
+        grid.addWidget(QLabel("Auto Fishing\nMade by Hegel\nV1.0\n\n©2021 Hegel"), 4, 4)
 
         self.setWindowTitle('Auto Fishing')
         self.resize(600, 400)
