@@ -129,7 +129,7 @@ class Main(QWidget):
         stopButton = QPushButton("중지")
         startButton.clicked.connect(self.worker_stop)
 
-        self.fishingCounter = QLabel("낚시 횟수 : ")
+        self.fishingCounter = QLabel("낚시 횟수 : 0")
 
         grid.addWidget(infoLabel1, 0, 0, 1, 3)
         grid.addWidget(captureButton, 1, 0)
@@ -137,6 +137,7 @@ class Main(QWidget):
         grid.addWidget(startButton, 0, 4)
         grid.addWidget(stopButton, 1, 4)
         grid.addWidget(self.fishingCounter, 2, 4)
+        grid.addWidget(QLabel("Auto Fishing\nMade by Hegel\nV1.0\n\n©2020 Hegel"), 4, 4)
 
         self.setWindowTitle('Auto Fishing')
         self.resize(600, 400)
