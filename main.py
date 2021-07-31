@@ -25,10 +25,9 @@ class Worker(QThread):
     working = 0
 
     def run(self):
-        time.sleep(3)
         print("start")
 
-        target = cv2.imread("D:\\programming\\AutoFishing\\target.png", cv2.IMREAD_GRAYSCALE)
+        target = cv2.imread(".\\target.png", cv2.IMREAD_GRAYSCALE)
 
         tcnt = 0
         while self.working == 0:
@@ -79,7 +78,7 @@ class Main(QWidget):
                                              '범위의 왼쪽 위로 지정하시겠습니까?(범위 내에 자막이 모두 들어올 수 있어야 함)',
                                              QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
                 if reply == QMessageBox.Yes:
-                    print(str(area_x1) + "," + str(area_y1))
+                    self.print_progress_text(f'범위 왼쪽 위 지정 : x={str(area_x1)}, y={str(area_y1)}')
                     break
                 else:
                     continue
@@ -91,7 +90,7 @@ class Main(QWidget):
                                              '범위의 오른쪽 아래로 지정하시겠습니까?(범위 내에 자막이 모두 들어올 수 있어야 함)',
                                              QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
                 if reply == QMessageBox.Yes:
-                    print(str(area_x2) + "," + str(area_y2))
+                    self.print_progress_text(f'범위 오른쪽 아래 지정 : x={str(area_x2)}, y={str(area_y2)}')
                     break
                 else:
                     continue
@@ -103,6 +102,12 @@ class Main(QWidget):
         self.progressText.append("[" + timestr + "] " + string)
 
     def worker_start(self):
+        self.print_progress_text("3초 뒤 시작")
+        time.sleep(1)
+        self.print_progress_text("2초 뒤 시작")
+        time.sleep(1)
+        self.print_progress_text("1초 뒤 시작")
+        time.sleep(1)
         self.print_progress_text("시작")
         self.worker.start()
         self.worker.working = True
@@ -135,7 +140,7 @@ class Main(QWidget):
         grid.addWidget(startButton, 0, 4)
         grid.addWidget(stopButton, 1, 4)
         grid.addWidget(self.fishingCounter, 2, 4)
-        grid.addWidget(QLabel("Auto Fishing\nMade by Hegel\nV1.0\n\n©2021 Hegel"), 4, 4)
+        grid.addWidget(QLabel("Auto Fishing\nMade by Hegel\nV1.1\n\n©2021 Hegel"), 4, 4)
 
         self.setWindowTitle('Auto Fishing')
         self.resize(600, 400)
